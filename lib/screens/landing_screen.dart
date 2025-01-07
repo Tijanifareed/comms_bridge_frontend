@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'signup_screen.dart' ;// Adjust the path to your file
+import 'login_screen.dart';
 
 
 class LandingScreen extends StatefulWidget {
@@ -84,12 +85,3 @@ class _LandingScreenState extends State<LandingScreen> {
 
 
 
-class LoginScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Login')),
-      body: Center(child: Text('Login Screen')),
-    );
-  }
-}

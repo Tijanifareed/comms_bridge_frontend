@@ -61,21 +61,30 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('welcome to CommsBridge'),
-      ),
+      backgroundColor: Colors.blueAccent,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Add text at the top
+            SizedBox(height:30),
+
             Text(
               'Create Your Account',
               style: TextStyle(
-                fontSize: 24, // Adjust the font size as needed
-                fontWeight: FontWeight.bold, // Make it bold
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
               ),
+              textAlign: TextAlign.center,
+            ),
+
+            Text(
+              'Sign up to enjoy seamless connection!',
+              style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.normal,
+              ),
+              textAlign: TextAlign.center,
             ),
             SizedBox(height: 20), // Add some space between the text and the form
 
@@ -143,7 +152,27 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ElevatedButton(
                     onPressed: _handleSignUp,
                     child: Text('Sign Up'),
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.blueAccent,
+                      backgroundColor: Colors.black
+                    ),
                   ),
+                  SizedBox(height: 10),
+                  TextButton(
+                      onPressed: (){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => LoginScreen()),
+                        );
+                      }, 
+                      
+                      child: Text(
+                        'Already have an account? Login',
+                        style: TextStyle(
+                          color: Colors.black
+                        ),
+                      ),
+                  )
                 ],
               ),
             ),

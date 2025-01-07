@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http; // Import http package
 import 'package:flutter/material.dart';
+import 'home_screen.dart';
 
 
 class LoginScreen extends StatefulWidget {
@@ -65,7 +66,21 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
+      backgroundColor: Colors.blueAccent,
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+                'Welcome Back!'
+            ),
+            Text(
+              'Sign in to your account!'
+            ),
+          ],
+        ),
+      )
     );
   }
 }
