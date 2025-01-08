@@ -3,6 +3,7 @@ import 'package:comms_bridge_flutter/screens/signup_screen.dart';
 import 'package:http/http.dart' as http; // Import http package
 import 'package:flutter/material.dart';
 import 'home_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class LoginScreen extends StatefulWidget {
@@ -29,8 +30,18 @@ class _LoginScreenState extends State<LoginScreen> {
 
       try{
         final response = await http.post(url, headers: headers, body: body);
-        if(response.statusCode == 201){
-          ScaffoldMessenger.of(context).showSnackBar(
+        final responseData = jsonDecode(response.body);
+        if(response.statusCode == 201 && responseData['sucessfull'] == true){
+            final token = responseData['datas']['token'];
+            final userName = responseData['datas']['userName'];
+
+            // Save the token using shared_preferences
+            final prefs = await SharedPreferences.getInstance();
+            await prefs.setString('authToken', token);
+            await prefs.setString('userName', userName);
+            print('Token Saved: $token');
+
+            ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('Login Successful!',
                 textAlign: TextAlign.center,
             )),
@@ -40,10 +51,18 @@ class _LoginScreenState extends State<LoginScreen> {
               MaterialPageRoute(builder: (context) => HomePage()),
           );
         }else{
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Sign-Up Failed: ${response.body}',
-                textAlign: TextAlign.center,
-            )),
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: Text('Error'),
+              content: Text(responseData['datas']['message'] ?? 'Login failed'),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: Text('OK'),
+                ),
+              ],
+            ),
           );
           Navigator.pushReplacement(
             context,
