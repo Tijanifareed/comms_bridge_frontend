@@ -1,9 +1,10 @@
+import 'package:comms_bridge_flutter/screens/voice_to_text_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   @override
-  State<HomePage> createState() => _HomePageState();
+  _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
@@ -21,7 +22,7 @@ class _HomePageState extends State<HomePage> {
 
   int _selectedIndex = 0;
   final List<Widget> _pages = [
-    Center(child: Text('Home Page')),
+  HomeScreen(),
     Center(child: Text('Profile Page')),
     Center(child: Text('Settings Page')),
   ];
@@ -93,3 +94,61 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+
+
+class HomeScreen extends StatefulWidget {
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+    backgroundColor: Colors.blueAccent,
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          // mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => VoiceToTextScreen()),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                shape: CircleBorder(
+                  side: BorderSide(color: Colors.blueAccent, width: 2), // Optional border
+                ),
+                padding: EdgeInsets.all(24), // Controls the size of the button
+                backgroundColor: Colors.blue, // Button background color
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min, // Ensures the column takes only as much space as needed
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Icon(Icons.mic, color: Colors.white, size: 24),
+                  SizedBox(height: 8),
+                  Text(
+                    'Voice to Text', // Text under the icon
+                    style: TextStyle(
+                      color: Colors.black, // Text color
+                      fontSize: 14, // Text size
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 20),
+          ],
+        ),
+
+
+      ),
+    );
+  }
+}
+
