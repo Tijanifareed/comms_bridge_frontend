@@ -1,6 +1,12 @@
+import 'package:comms_bridge_flutter/screens/sign_to_text_screen.dart';
+import 'package:comms_bridge_flutter/screens/text_to_sign_screen.dart';
+import 'package:comms_bridge_flutter/screens/text_to_voice_screen.dart';
 import 'package:comms_bridge_flutter/screens/voice_to_text_screen.dart';
+import 'package:comms_bridge_flutter/screens/weather_awareness_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'google_maps_screen.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -96,58 +102,130 @@ class _HomePageState extends State<HomePage> {
 }
 
 
-class HomeScreen extends StatefulWidget {
-  @override
-  _HomeScreenState createState() => _HomeScreenState();
-}
+//
 
-class _HomeScreenState extends State<HomeScreen> {
-
+class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-    backgroundColor: Colors.blueAccent,
+      backgroundColor: Colors.blueAccent, // Subtle blue background
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: Text(
+          'Feature Menu',
+          style: TextStyle(color: Colors.blueAccent),
+        ),
+        backgroundColor: Colors.black,
+        centerTitle: true,
+      ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          // mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => VoiceToTextScreen()),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                shape: CircleBorder(
-                  side: BorderSide(color: Colors.blueAccent, width: 2), // Optional border
-                ),
-                padding: EdgeInsets.all(24), // Controls the size of the button
-                backgroundColor: Colors.blue, // Button background color
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min, // Ensures the column takes only as much space as needed
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Icon(Icons.mic, color: Colors.white, size: 24),
-                  SizedBox(height: 8),
-                  Text(
-                    'Voice to Text', // Text under the icon
-                    style: TextStyle(
-                      color: Colors.black, // Text color
-                      fontSize: 14, // Text size
-                    ),
-                  ),
-                ],
-              ),
+        padding: const EdgeInsets.all(16.0), // Adjusted padding for better spacing
+        child: GridView.builder(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2, // Number of columns in the grid
+            crossAxisSpacing: 16, // Space between columns
+            mainAxisSpacing: 16, // Space between rows
+            childAspectRatio: 1.1, // Adjusted for better fit
+          ),
+          itemCount: 8, // Total number of buttons
+          itemBuilder: (context, index) {
+            return _buildButton(context, index);
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _buildButton(BuildContext context, int index) {
+    List<String> buttonLabels = [
+      'Voice to Text',
+      'Text to Speech',
+      'Weather Awareness',
+      'Text to Sign',
+      'Sign to Text',
+      'Google Maps',
+      'Another Button 1', // Placeholder
+      'Another Button 2', // Placeholder
+    ];
+
+    List<IconData> buttonIcons = [
+      Icons.mic,
+      Icons.volume_up,
+      Icons.wb_sunny,
+      Icons.text_fields,
+      Icons.language,
+      Icons.map,
+      Icons.extension, // Placeholder icon
+      Icons.widgets,   // Placeholder icon
+    ];
+
+    // List of routes for each functionality (replace these with actual screens)
+    List<Widget> routes = [
+      VoiceToTextScreen(),
+      TextToSpeechScreen(),
+      WeatherAwarenessScreen(),
+      TextToSignScreen(),
+      SignToTextScreen(),
+      GoogleMapsScreen(),
+      PlaceholderScreen(), // Placeholder screen for another button
+      PlaceholderScreen(), // Placeholder screen for another button
+    ];
+
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => routes[index]),
+        );
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.black,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black26,
+              blurRadius: 2,
+              offset: Offset(2, 2),
             ),
-            const SizedBox(height: 20),
           ],
         ),
-
-
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CircleAvatar(
+              backgroundColor: Colors.blueAccent.shade100,
+              radius: 30,
+              child: Icon(
+                buttonIcons[index],
+                color: Colors.black,
+                size: 30,
+              ),
+            ),
+            SizedBox(height: 12), // Space between icon and text
+            Text(
+              buttonLabels[index],
+              style: TextStyle(
+                color: Colors.blueAccent.shade700,
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
       ),
+    );
+  }
+}
+
+
+class PlaceholderScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Placeholder')),
+      body: Center(child: Text('Placeholder Screen')),
     );
   }
 }

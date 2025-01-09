@@ -17,10 +17,9 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _passwordController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
-
   void _handleLogin() async{
     if(_formKey.currentState!.validate()){
-      final url = Uri.parse('http://192.168.191.167:8080/login/existing/account');
+      final url = Uri.parse('http://172.16.0.111:8080/login/existing/account');
 
       final headers = {'Content-Type': 'application/json'};
       final body = jsonEncode({
