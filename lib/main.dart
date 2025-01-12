@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      // home: LandingScreen(),
       home: SplashScreen(), // Start with SplashScreen
     );
   }

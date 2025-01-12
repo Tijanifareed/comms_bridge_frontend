@@ -10,75 +10,99 @@ class LandingScreen extends StatefulWidget {
 
 class _LandingScreenState extends State<LandingScreen> {
   @override
+
+
+
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blueAccent,
-      body: Padding(
-          padding: const EdgeInsets.all(5.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          // Image section
+          ClipRRect(
+            borderRadius: const BorderRadius.only(
+              bottomLeft: Radius.circular(50),
+              bottomRight: Radius.circular(50),
+            ),
+            child: Image.network(
+              'https://img.freepik.com/free-photo/person-having-hearing-issues_23-2150038466.jpg?uid=R161737532&ga=GA1.1.635440889.1723451368&semt=ais_hybrid', // Replace with your image path
+              width: double.infinity,
+              height: MediaQuery.of(context).size.height * 0.5,
+              fit: BoxFit.cover,
+            ),
+          ),
+
+          // Text and content section
+          const SizedBox(height: 20),
+          const Text(
+            "Welcome to CommsBridge",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
+          ),
+          const SizedBox(height: 10),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Text(
+              "Empowering Your Communication",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.grey,
+              ),
+            ),
+          ),
+          const SizedBox(height: 20),
+
+          // Dots indicator
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(height:1),
-              Image.network(
-                'https://img.freepik.com/free-photo/hearing-issues-collage-design_23-2149831018.jpg?uid=R161737532&ga=GA1.1.635440889.1723451368',
-                height: 350,
-                width: 350,
-              ),
-              SizedBox(height:20),
-
-              Text(
-                'Welcome to CommsBridge',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 27,
-                  color: Colors.black,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(height: 5),
-              Text(
-                  'Empowering Your Communication',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 15,
-                  fontWeight: FontWeight.normal,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context)=> SignUpScreen()),
-                    );
-                  },
-                child: Text('Sign Up'),
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.blueAccent,
-                    backgroundColor: Colors.black,
-                  padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-
-                ),
-              ),
-              SizedBox(height: 10),
-              TextButton(
-                  onPressed: (){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => LoginScreen()),
-                );
-              }, child: Text(
-                'Already have an account? Login',
-                style: TextStyle(
-                  color: Colors.black,
-                ),
-              ))
+              _buildDot(isActive: false),
+              _buildDot(isActive: true),
+              _buildDot(isActive: false),
             ],
-          )
-      )
+          ),
+          const SizedBox(height: 20),
 
+          // Get Started Button
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Color(0xff023d5e),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30),
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+            ),
+            onPressed: () {
+              Navigator.push(
+            context,
+                MaterialPageRoute(builder: (context)=> SignUpScreen()),
+                 );
+            },
+            child: const Text(
+              "Get started",
+              style: TextStyle(fontSize: 16, color: Colors.white),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDot({required bool isActive}) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 5),
+      width: isActive ? 12 : 8,
+      height: isActive ? 12 : 8,
+      decoration: BoxDecoration(
+        color: isActive ? Color(0xff023d5e) : Colors.black,
+        borderRadius: BorderRadius.circular(50),
+      ),
     );
   }
 }

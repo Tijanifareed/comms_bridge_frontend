@@ -38,10 +38,10 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blueAccent,
+      backgroundColor: Color(0xffCED4DA),
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.black,
+        backgroundColor: Color(0xff023d5e),
         title: FutureBuilder<String?>(
             future: getUserName(),
             builder: (context, snapshot){
@@ -51,7 +51,7 @@ class _HomePageState extends State<HomePage> {
               return Text('Error'); // Handle error state
               } else if (snapshot.hasData) {
               return Text('Hi ${snapshot.data} Welcome Back!',
-                style: TextStyle(color: Colors.blueAccent, fontSize: 20),
+                style: TextStyle(color: Colors.white, fontSize: 20),
                 textAlign: TextAlign.center,
 
               );
@@ -65,7 +65,7 @@ class _HomePageState extends State<HomePage> {
       ),
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.black,
+        backgroundColor: Color(0xff023d5e),
           items: const [
             BottomNavigationBarItem(
               label: 'Home',
@@ -82,10 +82,11 @@ class _HomePageState extends State<HomePage> {
                 label: 'Settings',
 
                 icon: Icon(Icons.settings,
-                color: Colors.blueAccent)
+                color: Colors.blueAccent,
+                )
             ),
           ],
-          selectedItemColor: Colors.white,
+          selectedItemColor: Color(0xFFDEE2E6),
           unselectedItemColor: Colors.blueAccent,
         currentIndex: _selectedIndex,
         onTap: (index){
@@ -108,14 +109,14 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white, // Subtle blue background
+      backgroundColor: Color(0xff023d5e), // Subtle blue background
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Text(
           'Feature Menu',
-          style: TextStyle(color: Colors.blueAccent),
+          style: TextStyle(color: Colors.white),
         ),
-        backgroundColor: Colors.black,
+        backgroundColor: Color(0xff023d5e),
         centerTitle: true,
       ),
       body: Padding(
@@ -180,7 +181,7 @@ class HomeScreen extends StatelessWidget {
       },
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.black,
+          color: Color(0xff9DB4C0),
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
@@ -194,12 +195,12 @@ class HomeScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             CircleAvatar(
-              backgroundColor: Colors.blueAccent.shade100,
+              backgroundColor: Colors.blueAccent,
               radius: 30,
               child: Icon(
                 buttonIcons[index],
                 color: Colors.black,
-                size: 30,
+                size: 40,
               ),
             ),
             SizedBox(height: 12), // Space between icon and text

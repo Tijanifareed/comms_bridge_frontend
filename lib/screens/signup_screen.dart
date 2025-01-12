@@ -9,6 +9,8 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+
+
   // Controllers for the text fields
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _userNameController = TextEditingController();
@@ -21,7 +23,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   // Method to handle Sign-Up button press
   void _handleSignUp() async {
     if (_formKey.currentState!.validate()) {
-      final url = Uri.parse('http://172.16.0.111:8080/create/new/account');
+      final url = Uri.parse('http://192.168.137.1:8080/create/new/account');
       final headers = {'Content-Type': 'application/json'};
       final body = jsonEncode({
         'userEmail': _emailController.text,
@@ -61,7 +63,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blueAccent,
+      backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -79,7 +81,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
 
             Text(
-              'Sign up to enjoy seamless connection!',
+              'Sign up to enjoy seamless communication!',
               style: TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.normal,
@@ -153,7 +155,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     onPressed: _handleSignUp,
                     child: Text('Sign Up'),
                     style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.blueAccent,
+                      foregroundColor: Colors.white,
                       backgroundColor: Colors.black
                     ),
                   ),

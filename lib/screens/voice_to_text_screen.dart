@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'dart:convert';
+import 'package:comms_bridge_flutter/screens/transcribed_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -11,7 +13,6 @@ class VoiceToTextScreen extends StatefulWidget {
   @override
   _VoiceToTextScreenState createState() => _VoiceToTextScreenState();
 }
-
 
 class JwtHelper {
   // Extract userId from JWT
@@ -28,7 +29,6 @@ class JwtHelper {
     }
   }
 }
-
 
 class _VoiceToTextScreenState extends State<VoiceToTextScreen> {
   final FlutterSoundRecorder _recorder = FlutterSoundRecorder();
@@ -88,7 +88,7 @@ class _VoiceToTextScreenState extends State<VoiceToTextScreen> {
 
   /// Send audio file to backend
   Future<void> _sendAudioToBackend(File audioFile) async {
-    final url = Uri.parse('http://172.16.0.111:8080/transcribe-audio?');
+    final url = Uri.parse('http://192.168.137.1:8080/transcribe-audio?');
     final prefs = await SharedPreferences.getInstance();
     final jwtToken = prefs.getString('authToken') ?? '';
     int? userId = JwtHelper.extractUserId(jwtToken);
@@ -99,11 +99,29 @@ class _VoiceToTextScreenState extends State<VoiceToTextScreen> {
         ..files.add(await http.MultipartFile.fromPath('audio', audioFile.path));
 
       final response = await request.send();
+      final responseBody = await response.stream.bytesToString();
+      final responseData = await jsonDecode(responseBody);
 
-      if (response.statusCode == 200) {
+
+
+
+      if (response.statusCode == 200 || responseData['sucessfull'] == true) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Audio uploaded successfully')),
+          SnackBar(content: Text('Audio Transcribed successfully')),
         );
+
+        String transcribedText = await Future.delayed(
+          Duration(seconds: 2),
+              () => responseData['datas']['transcriptionText'],
+        );
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => TranscribedScreen(transcribedText: transcribedText ?? 'No text available'),
+          ),
+        );
+
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Failed to upload audio')),
@@ -135,10 +153,15 @@ class _VoiceToTextScreenState extends State<VoiceToTextScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+        backgroundColor: Color(0xff023d5e),
       appBar: AppBar(
-        backgroundColor: Colors.blueAccent,
-        title: Text('CommsBridge', textAlign: TextAlign.center),
+        backgroundColor: Color(0xff023d5e),
+        title: Text('CommsBridge',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Color(0xff0A0908)
+            ),
+        ),
       ),
       body: Center(
         child: Padding(
@@ -162,7 +185,7 @@ class _VoiceToTextScreenState extends State<VoiceToTextScreen> {
                   } else {
                     return Text(
                       'Hey ${snapshot.data}!',
-                      style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold,),
+                      style: TextStyle(color: Color(0xff0A0908), fontSize: 23, fontWeight: FontWeight.bold,),
 
                       textAlign: TextAlign.center,
                     );
@@ -173,7 +196,7 @@ class _VoiceToTextScreenState extends State<VoiceToTextScreen> {
               Text(
                 'Push to Transcribe',
                 style: TextStyle(
-                  color: Colors.black,
+                  color: Color(0xff0a0908),
                   fontSize: 15,
                   fontWeight: FontWeight.bold,
                 ),
@@ -185,7 +208,7 @@ class _VoiceToTextScreenState extends State<VoiceToTextScreen> {
                 style: ElevatedButton.styleFrom(
                   shape: CircleBorder(),
                   padding: EdgeInsets.all(20),
-                  backgroundColor: _isRecording ? Colors.red : Colors.blue,
+                  backgroundColor: _isRecording ? Color(0xff9D0208) : Colors.blue,
                 ),
                 child: Icon(
                   _isRecording ? Icons.volume_up : Icons.mic,
@@ -200,3 +223,5 @@ class _VoiceToTextScreenState extends State<VoiceToTextScreen> {
     );
   }
 }
+
+

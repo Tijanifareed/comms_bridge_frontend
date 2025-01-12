@@ -25,7 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   void _handleLogin() async{
     if(_formKey.currentState!.validate()){
-      final url = Uri.parse('http://172.16.0.111:8080/login/existing/account');
+      final url = Uri.parse('http://192.168.137.1:8080/login/existing/account');
 
       final headers = {'Content-Type': 'application/json'};
       final body = jsonEncode({
@@ -92,7 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blueAccent,
+      backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -152,7 +152,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ElevatedButton(
                       onPressed: _handleLogin,
                       style: ElevatedButton.styleFrom(
-                        foregroundColor: Colors.blueAccent,
+                        foregroundColor: Colors.white,
                         backgroundColor: Colors.black,
                       ),
                       child: Text(
