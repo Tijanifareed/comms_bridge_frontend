@@ -50,14 +50,14 @@ class _HomePageState extends State<HomePage> {
               } else if (snapshot.hasError) {
               return Text('Error'); // Handle error state
               } else if (snapshot.hasData) {
-              return Text('Hi ${snapshot.data} Welcome Back!',
-                style: TextStyle(color: Colors.white, fontSize: 20),
+              return Text('     Hi ${snapshot.data}, Welcome Back!',
+                style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
 
               );
               } else {
                 return Text('Hi Guest',
-                  style: TextStyle(color: Colors.white),); // Default text if no username
+                  style: TextStyle(color: Colors.white));
               }
             }
         ,
@@ -86,8 +86,8 @@ class _HomePageState extends State<HomePage> {
                 )
             ),
           ],
-          selectedItemColor: Color(0xFFDEE2E6),
-          unselectedItemColor: Colors.blueAccent,
+          selectedItemColor: Colors.blueAccent,
+          unselectedItemColor: Color(0xFFDEE2E6),
         currentIndex: _selectedIndex,
         onTap: (index){
           setState(() {
@@ -109,7 +109,8 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xff023d5e), // Subtle blue background
+      // backgroundColor: Color(0xff023d5e), // Subtle blue background
+      backgroundColor: Colors.white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Text(
@@ -117,6 +118,7 @@ class HomeScreen extends StatelessWidget {
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: Color(0xff023d5e),
+
         centerTitle: true,
       ),
       body: Padding(
@@ -199,7 +201,7 @@ class HomeScreen extends StatelessWidget {
               radius: 30,
               child: Icon(
                 buttonIcons[index],
-                color: Colors.black,
+                color: Colors.white,
                 size: 40,
               ),
             ),
