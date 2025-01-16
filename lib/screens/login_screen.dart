@@ -11,12 +11,6 @@ class LoginScreen extends StatefulWidget {
   _LoginScreenState createState() => _LoginScreenState();
 }
 
-
-
-
-
-
-
 class _LoginScreenState extends State<LoginScreen> {
 
   final TextEditingController _emailController = TextEditingController();
@@ -25,7 +19,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   void _handleLogin() async{
     if(_formKey.currentState!.validate()){
-      final url = Uri.parse('http://192.168.137.1:8080/login/existing/account');
+      final url = Uri.parse('http://172.16.0.27:8080/login/existing/account');
 
       final headers = {'Content-Type': 'application/json'};
       final body = jsonEncode({

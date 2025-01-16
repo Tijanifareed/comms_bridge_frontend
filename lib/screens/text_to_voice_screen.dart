@@ -10,6 +10,8 @@ class TextToSpeechScreen extends StatefulWidget {
 class _TextToSpeechScreenState extends State<TextToSpeechScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+        body: Text("Text to speech"),
+    );
   }
 }

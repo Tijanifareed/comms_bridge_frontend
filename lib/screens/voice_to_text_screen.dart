@@ -88,7 +88,7 @@ class _VoiceToTextScreenState extends State<VoiceToTextScreen> {
 
   /// Send audio file to backend
   Future<void> _sendAudioToBackend(File audioFile) async {
-    final url = Uri.parse('http://192.168.137.1:8080/transcribe-audio?');
+    final url = Uri.parse('http://172.16.0.27:8080/transcribe-audio?');
     final prefs = await SharedPreferences.getInstance();
     final jwtToken = prefs.getString('authToken') ?? '';
     int? userId = JwtHelper.extractUserId(jwtToken);
