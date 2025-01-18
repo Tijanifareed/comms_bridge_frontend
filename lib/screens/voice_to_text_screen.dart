@@ -88,7 +88,7 @@ class _VoiceToTextScreenState extends State<VoiceToTextScreen> {
 
   /// Send audio file to backend
   Future<void> _sendAudioToBackend(File audioFile) async {
-    final url = Uri.parse('http://172.16.0.27:8080/transcribe-audio?');
+    final url = Uri.parse('http://192.168.137.1:8080/transcribe-audio?');
     final prefs = await SharedPreferences.getInstance();
     final jwtToken = prefs.getString('authToken') ?? '';
     int? userId = JwtHelper.extractUserId(jwtToken);
@@ -140,7 +140,7 @@ class _VoiceToTextScreenState extends State<VoiceToTextScreen> {
     super.dispose();
   }
 
-  /// Retrieve username from SharedPreferences
+
   Future<String?> _getUserName() async {
     try {
       final prefs = await SharedPreferences.getInstance();
@@ -156,10 +156,10 @@ class _VoiceToTextScreenState extends State<VoiceToTextScreen> {
         backgroundColor: Color(0xff023d5e),
       appBar: AppBar(
         backgroundColor: Color(0xff023d5e),
-        title: Text('CommsBridge',
+        title: Text('   CommsBridge',
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: Color(0xff0A0908)
+              color: Colors.white
             ),
         ),
       ),
@@ -185,7 +185,7 @@ class _VoiceToTextScreenState extends State<VoiceToTextScreen> {
                   } else {
                     return Text(
                       'Hey ${snapshot.data}!',
-                      style: TextStyle(color: Color(0xff0A0908), fontSize: 23, fontWeight: FontWeight.bold,),
+                      style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold,),
 
                       textAlign: TextAlign.center,
                     );
@@ -196,7 +196,7 @@ class _VoiceToTextScreenState extends State<VoiceToTextScreen> {
               Text(
                 'Push to Transcribe',
                 style: TextStyle(
-                  color: Color(0xff0a0908),
+                  color: Colors.white,
                   fontSize: 15,
                   fontWeight: FontWeight.bold,
                 ),

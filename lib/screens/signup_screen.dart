@@ -23,7 +23,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   // Method to handle Sign-Up button press
   void _handleSignUp() async {
     if (_formKey.currentState!.validate()) {
-      final url = Uri.parse('http://172.16.0.27:8080/create/new/account');
+      final url = Uri.parse('http://192.168.137.1:8080/create/new/account');
       final headers = {'Content-Type': 'application/json'};
       final body = jsonEncode({
         'userEmail': _emailController.text,

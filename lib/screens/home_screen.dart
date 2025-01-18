@@ -1,3 +1,4 @@
+import 'package:comms_bridge_flutter/screens/settings_screen.dart';
 import 'package:comms_bridge_flutter/screens/sign_to_text_screen.dart';
 import 'package:comms_bridge_flutter/screens/text_to_sign_screen.dart';
 import 'package:comms_bridge_flutter/screens/text_to_voice_screen.dart';
@@ -30,7 +31,7 @@ class _HomePageState extends State<HomePage> {
   final List<Widget> _pages = [
   HomeScreen(),
     Center(child: Text('Profile Page')),
-    Center(child: Text('Settings Page')),
+    SettingsScreen(),
   ];
 
 

@@ -19,7 +19,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   void _handleLogin() async{
     if(_formKey.currentState!.validate()){
-      final url = Uri.parse('http://172.16.0.27:8080/login/existing/account');
+      final url = Uri.parse('http://192.168.137.1:8080/login/existing/account');
 
       final headers = {'Content-Type': 'application/json'};
       final body = jsonEncode({
@@ -71,7 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
       }catch(error){
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('An error occurred: $error',
-              textAlign: TextAlign.center
+              textAlign: TextAlign.center,
           ),
           ),
 
@@ -102,7 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
               textAlign: TextAlign.center,
             ),
             Text(
-              'Sign in to your account!',
+              'Sign in to your account',
               style: TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.normal,
@@ -142,7 +142,28 @@ class _LoginScreenState extends State<LoginScreen> {
                         return null;
                       },
                     ),
-                    SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                        children:[
+                          TextButton(
+                            onPressed: (){
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => SignUpScreen()),
+                              );
+                            },
+                            child: Text(
+                              'Forgot Password?',
+                              style: TextStyle(
+                                  color: Colors.black
+                              ),
+                            ),
+                            iconAlignment: IconAlignment.end,
+                          ),
+                        ]
+                    ),
+
+                    SizedBox(height: 13),
                     ElevatedButton(
                       onPressed: _handleLogin,
                       style: ElevatedButton.styleFrom(
