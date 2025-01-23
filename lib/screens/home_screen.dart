@@ -51,7 +51,7 @@ class _HomePageState extends State<HomePage> {
               } else if (snapshot.hasError) {
               return Text('Error'); // Handle error state
               } else if (snapshot.hasData) {
-              return Text('     Hi ${snapshot.data}, Welcome Back!',
+              return Text('Hi ${snapshot.data}, Welcome Back!',
                 style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
 
@@ -63,6 +63,7 @@ class _HomePageState extends State<HomePage> {
             }
         ,
         ),
+        centerTitle: true,
       ),
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
@@ -74,8 +75,8 @@ class _HomePageState extends State<HomePage> {
                 color: Colors.blueAccent,)
             ),
             BottomNavigationBarItem(
-              label: 'Profile',
-              icon: Icon(Icons.person,
+              label: 'Notifications',
+              icon: Icon(Icons.notifications,
                 color: Colors.blueAccent,
               ),
             ),

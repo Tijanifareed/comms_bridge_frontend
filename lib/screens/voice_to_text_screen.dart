@@ -186,7 +186,6 @@ class _VoiceToTextScreenState extends State<VoiceToTextScreen> {
                     return Text(
                       'Hey ${snapshot.data}!',
                       style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold,),
-
                       textAlign: TextAlign.center,
                     );
                   }

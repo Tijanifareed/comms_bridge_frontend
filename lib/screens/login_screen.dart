@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:comms_bridge_flutter/screens/request_reset_password_screen.dart';
 import 'package:comms_bridge_flutter/screens/signup_screen.dart';
 import 'package:http/http.dart' as http; // Import http package
 import 'package:flutter/material.dart';
@@ -12,44 +13,66 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-
+  bool isLoading = false;
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
-  void _handleLogin() async{
-    if(_formKey.currentState!.validate()){
-      final url = Uri.parse('http://192.168.137.1:8080/login/existing/account');
 
-      final headers = {'Content-Type': 'application/json'};
-      final body = jsonEncode({
-        'email' : _emailController.text,
-        'password':_passwordController.text,
+
+
+
+
+  void _handleLogin() async {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        isLoading = true; // Show loader
       });
 
-      try{
+      final url = Uri.parse('http://192.168.137.1:8080/login/existing/account');
+      final headers = {'Content-Type': 'application/json'};
+      final body = jsonEncode({
+        'email': _emailController.text,
+        'password': _passwordController.text,
+      });
+
+      try {
         final response = await http.post(url, headers: headers, body: body);
         final responseData = jsonDecode(response.body);
-        if(response.statusCode == 201 && responseData['sucessfull'] == true){
-            final token = responseData['datas']['token'];
-            final userName = responseData['datas']['userName'];
 
-            // Save the token using shared_preferences
-            final prefs = await SharedPreferences.getInstance();
-            await prefs.setString('authToken', token);
-            await prefs.setString('userName', userName);
-            print('Token Saved: $token');
+        if (response.statusCode == 201 && responseData['sucessfull'] == true) {
+          final token = responseData['datas']['token'];
+          final userName = responseData['datas']['userName'];
 
-            ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Login Successful!',
+          // Save the token using shared_preferences
+          final prefs = await SharedPreferences.getInstance();
+          await prefs.setString('authToken', token);
+          await prefs.setString('userName', userName);
+
+          print('Token Saved: $token');
+
+          setState(() {
+            isLoading = false; // Hide loader
+          });
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                'Login Successful!',
                 textAlign: TextAlign.center,
-            )),
+              ),
+            ),
           );
+
           Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => HomePage()),
+            context,
+            MaterialPageRoute(builder: (context) => HomePage()),
           );
-        }else{
+        } else {
+          setState(() {
+            isLoading = false; // Hide loader
+          });
+
           showDialog(
             context: context,
             builder: (context) => AlertDialog(
@@ -63,22 +86,28 @@ class _LoginScreenState extends State<LoginScreen> {
               ],
             ),
           );
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => LoginScreen()),
-          );
         }
-      }catch(error){
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('An error occurred: $error',
-              textAlign: TextAlign.center,
-          ),
-          ),
+      } catch (error) {
+        setState(() {
+          isLoading = false;
+        });
 
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              'An error occurred: $error',
+              textAlign: TextAlign.center,
+            ),
+          ),
         );
       }
+    } else {
+      setState(() {
+        isLoading = false;
+      });
     }
   }
+
 
 
 
@@ -86,8 +115,12 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: Padding(
+      backgroundColor: Color(0xfff2f2f2),
+      body: isLoading
+          ? Center(
+        child: CircularProgressIndicator(), // Loading animation
+      )
+      :Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -149,7 +182,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             onPressed: (){
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => SignUpScreen()),
+                                MaterialPageRoute(builder: (context) => RequestResetPasswordScreen()),
                               );
                             },
                             child: Text(
